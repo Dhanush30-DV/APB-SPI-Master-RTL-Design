@@ -13,7 +13,7 @@ An **AMBA APB-to-SPI master bridge** designed in **Verilog**. A processor on the
 | **HDL** | Verilog (Verilog-2001) |
 | **Simulation** | Synopsys VCS, Xilinx ISE Simulator (ISim) |
 | **Waveform debug** | Synopsys Verdi, Xilinx ISim |
-| **Lint** | Synopsys SpyGlass, Verilator (`-Wall`) — lint-clean RTL |
+| **Lint** | Synopsys VC SpyGlass (VC Static X-2025.06) — 0 errors, 0 latches · Verilator `-Wall` |
 | **Synthesis** | Synopsys Design Compiler, Yosys |
 | **Protocols** | AMBA APB, SPI (Serial Peripheral Interface) |
 | **Platform** | Linux |
@@ -98,15 +98,19 @@ The RTL is written to be **lint-clean and synthesis-ready**:
 - **No dead or always-true comparisons.**
 - **Explicit bit widths** throughout.
 
-| Check | Tool | Result |
-|---|---|---|
-| Lint | Verilator 5 `--lint-only -Wall` | **0 warnings, 0 errors** |
-| Elaboration | slang `-Weverything` | **0 warnings, 0 errors** |
-| Synthesis | Yosys (generic gates) | **0 latches, 0 warnings** · 105 flip-flops · 893 cells |
+### Lint — Synopsys VC SpyGlass (`lint_rtl`)
 
-Scripts to run the industry tools:
-- **SpyGlass lint:** [`lint/spyglass_lint.prj`](lint/spyglass_lint.prj), goal `lint/lint_rtl`.
-- **Design Compiler synthesis:** [`syn/dc_synth.tcl`](syn/dc_synth.tcl). It uses a 100 MHz PCLK constraint and writes area, timing, power and QoR reports plus the gate-level netlist.
+| Fatal | Error | Warning | Info | Latches | Flip-flops |
+|---|---|---|---|---|---|
+| **0** | **0** | 1 (tool setup) | 11 | **0** | 110 |
+
+The one warning comes from the empty link-library setting, not from the RTL. The infos note unregistered top-level ports, which is expected for an APB slave. Full report, run log and explanation: [`lint/`](lint/).
+
+Additional open-source checks: Verilator 5 `--lint-only -Wall` gives **0 warnings**, and slang `-Weverything` gives **0 warnings**.
+
+### Synthesis
+
+Synthesis script for Synopsys Design Compiler: [`syn/dc_synth.tcl`](syn/dc_synth.tcl).
 
 ---
 
@@ -137,7 +141,10 @@ APB-SPI-Master-RTL-Design/
 ├── sim/
 │   └── filelist.f            # RTL compile list
 ├── lint/
-│   └── spyglass_lint.prj     # SpyGlass lint project
+│   ├── vc_lint.tcl           # VC SpyGlass lint script
+│   ├── Makefile
+│   ├── README.md             # lint results explained
+│   └── reports/              # report_lint.txt, run log
 ├── syn/
 │   └── dc_synth.tcl          # Design Compiler synthesis script
 └── docs/
@@ -155,8 +162,8 @@ vcs -full64 -sverilog -debug_access+all -f filelist.f <your_testbench>.v -top <t
 ./simv
 verdi -f filelist.f <your_testbench>.v &
 
-# Synopsys SpyGlass lint (from lint/)
-spyglass -project spyglass_lint.prj -batch
+# Synopsys VC SpyGlass lint (from lint/)
+make lint
 
 # Synopsys Design Compiler synthesis (from syn/, set TARGET_LIB first)
 dc_shell -f dc_synth.tcl | tee dc_synth.log

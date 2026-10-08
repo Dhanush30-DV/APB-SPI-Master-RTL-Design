@@ -1,0 +1,5 @@
+lint:
+	$(VC_STATIC_HOME)/bin/vc_static_shell -mode64 -f vc_lint.tcl
+
+clean:
+	rm -rf novas* vcst* *.txt
