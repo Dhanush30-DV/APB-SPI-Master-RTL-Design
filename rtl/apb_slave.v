@@ -66,8 +66,8 @@ wire modf;
 wire ssoe;
 wire modfen;
 
-reg sptef;
-reg spif;
+wire sptef;
+wire spif;
 
 wire wr_enb;
 wire rd_enb;
@@ -81,7 +81,7 @@ wire rd_enb;
 reg [7:0] SPI_CR_1;
 reg [7:0] SPI_CR_2;
 reg [7:0] SPI_BR;
-reg [7:0] SPI_SR;
+wire [7:0] SPI_SR;
 reg [7:0] SPI_DR;
 
  // ---------------- APB FSM: IDLE -> SETUP -> ENABLE ----------------
@@ -140,6 +140,7 @@ reg [7:0] SPI_DR;
          SPI_BR <= 8'b0000_0000;
          SPI_DR <= 8'b0000_0000;
          send_data <= 1'b0;
+         mosi_data <= 8'b0000_0000;
        end
      else if (wr_enb)
        begin
@@ -196,7 +197,7 @@ reg [7:0] SPI_DR;
  assign modf=((~ss)&& mstr && modfen && (~ssoe));
 
  // Interrupt request from SPIF / SPTEF / MODF, gated by SPIE and SPTIE
- assign spi_interrupt_request = ( !spie && !sptie )?0:
+ assign spi_interrupt_request = ( !spie && !sptie )? 1'b0 :
                                 ( spie && !sptie )? (spif || modf ):
                                 ( !spie && sptie )? sptef :
                                 (spif || sptef || modf );
@@ -242,24 +243,10 @@ reg [7:0] SPI_DR;
    end
 
  // ---------------- Status register (SPIF, SPTEF, MODF) ----------------
- always@(*)
-   begin
-     if(!PRESETn)
-       SPI_SR = 8'b0010_0000;
-     else
-       begin
-         if(SPI_DR==8'b0000_0000 )
-           sptef =1'b1;
-         else
-           sptef =1'b0;
-
-         if(SPI_DR!=8'b0000_0000)
-           spif =1'b1;
-         else
-           spif =1'b0;
-
-         SPI_SR = {spif, 1'b0, sptef, modf, 4'b0};
-       end
-   end
+ // Pure combinational decode (no latch). During reset SPI_DR = 0 and SS = 1,
+ // so SPI_SR evaluates to its reset value 8'b0010_0000 (SPTEF = 1).
+ assign sptef  = (SPI_DR == 8'b0000_0000);   // transmit data register empty
+ assign spif   = (SPI_DR != 8'b0000_0000);   // data available
+ assign SPI_SR = {spif, 1'b0, sptef, modf, 4'b0000};
 
 endmodule

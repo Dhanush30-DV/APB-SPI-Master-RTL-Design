@@ -29,7 +29,7 @@ module spi_slave_select(input PRESETn,
  reg rcv;
 
  // Transfer length: 16 baud periods = 8 SCLK cycles = 8 bits
- assign target=BaudRateDivisor*5'd16;
+ assign target = {BaudRateDivisor, 4'b0000};   // BaudRateDivisor * 16
  // Transfer in progress while SS is asserted (active low)
  assign tip = (~ss);
 
@@ -48,11 +48,11 @@ module spi_slave_select(input PRESETn,
              ss <= 1'b0;
              count<= 16'h0;
            end
-         else if(count <= (target-1'b1))
+         else if(count <= (target-16'd1))
            begin
              ss<=1'b0;
-             count <= count +1'b1;
-             if(count==(target-1'b1))
+             count <= count + 16'd1;
+             if(count==(target-16'd1))
                rcv<=1'b1;
            end
          else

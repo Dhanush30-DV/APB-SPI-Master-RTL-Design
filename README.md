@@ -13,7 +13,8 @@ An **AMBA APB-to-SPI master bridge** designed in **Verilog**. A processor on the
 | **HDL** | Verilog (Verilog-2001) |
 | **Simulation** | Synopsys VCS, Xilinx ISE Simulator (ISim) |
 | **Waveform debug** | Synopsys Verdi, Xilinx ISim |
-| **Lint** | Synopsys SpyGlass — lint-clean RTL |
+| **Lint** | Synopsys SpyGlass, Verilator (`-Wall`) — lint-clean RTL |
+| **Synthesis** | Synopsys Design Compiler, Yosys |
 | **Protocols** | AMBA APB, SPI (Serial Peripheral Interface) |
 | **Platform** | Linux |
 
@@ -89,6 +90,26 @@ SCLK toggles every BaudRateDivisor PCLK cycles, so f_SCLK = f_PCLK / (2 × BaudR
 
 ---
 
+## Lint & Synthesis
+
+The RTL is written to be **lint-clean and synthesis-ready**:
+- **No latches.** The status register is pure combinational logic.
+- **Every flip-flop has a constant asynchronous reset.**
+- **No dead or always-true comparisons.**
+- **Explicit bit widths** throughout.
+
+| Check | Tool | Result |
+|---|---|---|
+| Lint | Verilator 5 `--lint-only -Wall` | **0 warnings, 0 errors** |
+| Elaboration | slang `-Weverything` | **0 warnings, 0 errors** |
+| Synthesis | Yosys (generic gates) | **0 latches, 0 warnings** · 105 flip-flops · 893 cells |
+
+Scripts to run the industry tools:
+- **SpyGlass lint:** [`lint/spyglass_lint.prj`](lint/spyglass_lint.prj), goal `lint/lint_rtl`.
+- **Design Compiler synthesis:** [`syn/dc_synth.tcl`](syn/dc_synth.tcl). It uses a 100 MHz PCLK constraint and writes area, timing, power and QoR reports plus the gate-level netlist.
+
+---
+
 ## Simulation Waveform
 
 <p align="center"><img src="docs/waveform_apb_spi_rtl.png" alt="APB-SPI simulation waveform" width="100%"></p>
@@ -115,6 +136,10 @@ APB-SPI-Master-RTL-Design/
 │   └── shifter.v             # MOSI/MISO shift registers
 ├── sim/
 │   └── filelist.f            # RTL compile list
+├── lint/
+│   └── spyglass_lint.prj     # SpyGlass lint project
+├── syn/
+│   └── dc_synth.tcl          # Design Compiler synthesis script
 └── docs/
     ├── block_diagram.svg
     └── waveform_apb_spi_rtl.png
@@ -130,8 +155,14 @@ vcs -full64 -sverilog -debug_access+all -f filelist.f <your_testbench>.v -top <t
 ./simv
 verdi -f filelist.f <your_testbench>.v &
 
-# Synopsys SpyGlass lint (RTL only)
-# read the files in filelist.f with top = spi_core and run the lint goal
+# Synopsys SpyGlass lint (from lint/)
+spyglass -project spyglass_lint.prj -batch
+
+# Synopsys Design Compiler synthesis (from syn/, set TARGET_LIB first)
+dc_shell -f dc_synth.tcl | tee dc_synth.log
+
+# Open-source lint check
+verilator --lint-only -Wall -I../rtl --top-module spi_core ../rtl/*.v
 ```
 
 ---

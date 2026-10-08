@@ -55,79 +55,35 @@ module shifter(input PCLK,
  // Received byte is presented to the APB block when receive_data is high
  assign data_miso=receive_data?temp_reg:8'b0000_0000;
 
+ // Mode 1/2 (CPOL != CPHA) use the SCLK-high strobes; mode 0/3 use the SCLK-low strobes
+ wire mode_12  = (!cpha && cpol) || (cpha && !cpol);
+ wire tx_shift = mode_12 ? flags_high : flags_low;   // drive next MOSI bit
+ wire rx_shift = mode_12 ? flag_high  : flag_low;    // sample MISO bit
+
  // ---------------- MOSI: transmit, LSB-first or MSB-first ----------------
+ // count  : bit index 0 -> 7 for LSB-first (3-bit counter wraps naturally)
+ // count1 : bit index 7 -> 0 for MSB-first
  always@(posedge PCLK or negedge PRESETn)
    begin
      if(!PRESETn)
        begin
-         mosi <= 1'b0;
-         count <= 3'd0;
+         mosi   <= 1'b0;
+         count  <= 3'd0;
          count1 <= 3'd7;
        end
-     else
+     else if(!ss && tx_shift)
        begin
-         if(!ss)
+         if(lsbfe)
            begin
-             if((!cpha && cpol)||(cpha && !cpol))
-               begin
-                 if(lsbfe)
-                   begin
-                     if(count <= 3'd7)
-                       begin
-                         if(flags_high)
-                           begin
-                             mosi<= shift_register[count];
-                             count <= count + 1'b1;
-                           end
-                       end
-                     else
-                       count <= 3'd0;
-                   end
-                 else
-                   begin
-                     if(count1 >= 3'd0)
-                       begin
-                         if(flags_high)
-                           begin
-                             mosi<= shift_register[count1];
-                             count1 <= count1 -1'b1;
-                           end
-                       end
-                     else
-                       count1 <= 3'd7;
-                   end
-               end
-             else
-               begin
-                 if(lsbfe)
-                   begin
-                     if(count <= 3'd7)
-                       begin
-                         if(flags_low)
-                           begin
-                             mosi<= shift_register[count];
-                             count <= count + 1'b1;
-                           end
-                       end
-                     else
-                       count <= 3'd0;
-                   end
-                 else
-                   begin
-                     if(count1 >= 3'd0)
-                       begin
-                         if(flags_low)
-                           begin
-                             mosi<= shift_register[count1];
-                             count1 <= count1- 1'b1;
-                           end
-                       end
-                     else
-                       count1 <= 3'd7;
-                   end
-               end
+             mosi  <= shift_register[count];
+             count <= count + 3'd1;
            end
-        end
+         else
+           begin
+             mosi   <= shift_register[count1];
+             count1 <= count1 - 3'd1;
+           end
+       end
    end
 
  // ---------------- MISO: receive, LSB-first or MSB-first ----------------
@@ -135,73 +91,23 @@ module shifter(input PCLK,
    begin
      if(!PRESETn)
        begin
-         count2 <= 3'd0;
-         count3 <= 3'd7;
-         temp_reg<= 8'b0;
+         count2   <= 3'd0;
+         count3   <= 3'd7;
+         temp_reg <= 8'b0;
        end
-     else
+     else if(!ss && rx_shift)
        begin
-         if(!ss)
+         if(lsbfe)
            begin
-             if((!cpha && cpol)||(cpha && !cpol))
-               begin
-                 if(lsbfe)
-                   begin
-                     if(count2 <= 3'd7)
-                       begin
-                         if(flag_high)
-                           begin
-                             temp_reg[count2] <= miso;
-                             count2 <= count2 + 1'b1;
-                           end
-                       end
-                     else
-                       count2 <= 3'd0;
-                   end
-                 else
-                   begin
-                     if(count3 >= 3'd0)
-                       begin
-                         if(flag_high)
-                           begin
-                             temp_reg[count3] <= miso;
-                             count3 <= count3 -1'b1;
-                           end
-                       end
-                     else
-                       count3 <= 3'd7;
-                   end
-               end
-             else
-               begin
-                 if(lsbfe)
-                   begin
-                     if(count2 <= 3'd7)
-                       begin
-                         if(flag_low)
-                           begin
-                             temp_reg[count2] <= miso;
-                             count2 <= count2 + 1'b1;
-                           end
-                       end
-                     else
-                       count2 <= 3'd0;
-                   end
-                 else
-                   begin
-                     if(count3 >= 3'd0)
-                       begin
-                         if(flag_low)
-                           begin
-                             temp_reg[count3] <= miso;
-                             count3 <= count3- 1'b1;
-                           end
-                       end
-                     else
-                       count3 <= 3'd7;
-                   end
-               end
+             temp_reg[count2] <= miso;
+             count2 <= count2 + 3'd1;
+           end
+         else
+           begin
+             temp_reg[count3] <= miso;
+             count3 <= count3 - 3'd1;
            end
        end
    end
+
 endmodule

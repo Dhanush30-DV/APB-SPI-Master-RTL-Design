@@ -35,7 +35,7 @@ module baud_generator(input PCLK,
  reg[11:0] count;
 
  // Baud-rate divisor = (SPPR + 1) * 2^(SPR + 1)
- assign BaudRateDivisor=((sppr+1)*(2**(spr+1)));
+ assign BaudRateDivisor = ({9'd0, sppr} + 12'd1) << ({1'b0, spr} + 4'd1);
 
  // Idle level of SCLK follows clock polarity (CPOL)
  assign pre_sclk=cpol? 1'b1 : 1'b0;
@@ -46,17 +46,17 @@ module baud_generator(input PCLK,
      if(!PRESETn)
        begin
          count<=12'b0;
-         sclk<=pre_sclk;
+         sclk<=1'b0;      // constant reset value: CPOL is 0 while in reset (SPI_CR_1 resets to 8'h04)
        end
      else if((~ss) && (spi_mode == 2'b00 || (spi_mode == 2'b01 && (~spiswai))) )
        begin
-         if(count==(BaudRateDivisor-1'b1))
+         if(count==(BaudRateDivisor-12'd1))
            begin
              count<=12'b0;
              sclk<=~sclk;
            end
          else
-           count <= count+1'b1;
+           count <= count+12'd1;
        end
      else
        begin
@@ -78,7 +78,7 @@ module baud_generator(input PCLK,
          if((!cpha && cpol)||(cpha && !cpol))
            begin
              if(sclk)
-               if(count == (BaudRateDivisor-1'b1))
+               if(count == (BaudRateDivisor-12'd1))
                  flag_high<= 1'b1;
                else
                  flag_high <= 1'b0;
@@ -88,7 +88,7 @@ module baud_generator(input PCLK,
          else
            begin
              if(~sclk)
-               if(count == (BaudRateDivisor-1'b1))
+               if(count == (BaudRateDivisor-12'd1))
                  flag_low<= 1'b1;
                else
                  flag_low <= 1'b0;
@@ -111,7 +111,7 @@ module baud_generator(input PCLK,
          if((!cpha && cpol)||(cpha && !cpol))
            begin
              if(sclk)
-               if(count == (BaudRateDivisor-2'b10))
+               if(count == (BaudRateDivisor-12'd2))
                  flags_high<= 1'b1;
                else
                  flags_high <= 1'b0;
@@ -121,7 +121,7 @@ module baud_generator(input PCLK,
          else
            begin
              if(~sclk)
-               if(count == (BaudRateDivisor-2'b10))
+               if(count == (BaudRateDivisor-12'd2))
                  flags_low<= 1'b1;
                else
                  flags_low <= 1'b0;
