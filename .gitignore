@@ -1,0 +1,20 @@
+# Simulator / EDA tool outputs
+csrc/
+simv*
+*.daidir/
+ucli.key
+*.vpd
+*.fsdb
+*.vcd
+*.wdb
+*.log
+work/
+transcript
+vsim.wlf
+verdiLog/
+novas*
+spyglass-*/
+xsim.dir/
+isim/
+*.jou
+*.pb
