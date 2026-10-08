@@ -18,3 +18,7 @@ xsim.dir/
 isim/
 *.jou
 *.pb
+
+# keep committed tool run logs in reports/
+!lint/reports/*.log
+!syn/reports/*.log

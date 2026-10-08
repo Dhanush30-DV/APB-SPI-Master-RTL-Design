@@ -1,0 +1,78 @@
+/home/cad/eda/SYNOPSYS/vc_static_vX-2025.06/vc_static/X-2025.06/bin/vc_static_shell -mode64 -f vc_lint.tcl
+
+                                   VC Static
+
+                 Version X-2025.06 for linux64 - May 29, 2025
+
+vc_static_shell> # Setup Search Path
+set search_path "./ ../rtl"
+[Warning] DIR_NOT_EXIST: Directory '../rtl' does not exist.
+./ ../rtl
+set link_library " "
+
+# Enable VC Static Linting Engine
+set_app_var enable_lint true
+[Info] In case any tcl command throwing error , last 10 suppressed messages for the command will be shown on console.
+true
+# Set Linting Goal
+configure_lint_setup -goal lint_rtl
+# Analyze & Elaborate Design
+analyze -verbose -format verilog "./rtl/apb_spi_core_all.v"
+[Info] DB_COPT044: Calling VCS: '$VCS_HOME/bin/vlogan  -kdb=common_elab /home2/BRN69/DhaNusHraJ/Linting/APB_SPI_LINT/vcst_rtdb/.internal/design/undef_vcs.v -Xvd_opts=-silent,+disable_message+C00373,-ssy,-ssv,-ssz -file /home2/BRN69/DhaNusHraJ/Linting/APB_SPI_LINT/vcst_rtdb/.internal/design/analyzeCmd1 -kdb=incopt  -Xufe=parallel:incrdump  -full64  -libfile_opt '.
+                         Chronologic VCS (TM)
+         Version X-2025.06_Full64 -- Thu Oct  8 15:38:34 2026
+
+Parsing design file '/home2/BRN69/DhaNusHraJ/Linting/APB_SPI_LINT/vcst_rtdb/.internal/design/undef_vcs.v'
+Parsing design file './rtl/apb_spi_core_all.v'
+CPU time: .103 seconds to compile
+1
+elaborate spi_core
+Doing common elaboration
+Final timescale is '10ps/10ps'
+Info: Invoking Simon...
+Importing Symbol Libraries...
+Info: Simon VCS Start
+
+****************************************************************************
+WARNING: Simon running with following NOT-RECOMMENDED mode(s)
+  * highLevelForm=0           : Need to enable highLevelForm=1
+  * alwaysSplitStructArrays=0 : Need to enable alwaysSplitStructArrays=1
+****************************************************************************
+
+=======================================================
+VCS CPU Time(s)     :0.09
+SIMON CPU Time(s)   :0.08
+SIMON Total Time(s) :0.03
+Peak Memory(MB)     :323
+=======================================================
+Info: Simon VCS Finished
+Info: Simon call complete
+Info: Exiting after Simon Analysis
+
+  Failed to import the "default_u" library because the library files cannot be found in the library paths.
+---Any error or warning message, please refer to /home2/BRN69/DhaNusHraJ/Linting/APB_SPI_LINT/vcst_rtdb/verdi/elabcomLog/libCompiler.log---
+
+Verdi KDB elaboration done and the database successfully generated: 0 error(s), 0 warning(s)
+# Gate Counts
+Number of Flat Instances = 411
+Number of Operator = 411
+Number of Libcells = 0
+Number of Black-Box Instances = 0
+Number of FlipFlop BitWise = 110
+Number of Latch Bitwise = 0
+Number of Nand BitWise = 3
+Number of Comb logic = 299
+
+1
+# Perform Lint Checks
+check_lint
+[Info] Running goal lint_rtl
+[Info] Loading Lint Structural Checker Plugin... Success
+Inferring all potential clocks
+Inferring all potential resets
+[Info] WordScc Detection stage... Success
+1
+# Generate Linting Report
+report_lint -verbose -file report_lint.txt
+The command report_lint is deprecated. Please use report_violations command.
+1
