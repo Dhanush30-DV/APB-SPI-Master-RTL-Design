@@ -1,0 +1,57 @@
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : spi_core
+Version: X-2025.06
+Date   : Thu Oct  8 16:10:51 2026
+****************************************
+
+Operating Conditions: nom_pvt   Library: lsi_10k
+Wire Load Model Mode: top
+
+  Startpoint: APB_INTERFACE/SPI_BR_reg[0]
+              (rising edge-triggered flip-flop clocked by PCLK)
+  Endpoint: BAUD_GEN/count_reg[1]
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  APB_INTERFACE/SPI_BR_reg[0]/CP (FD2)                    0.00       0.00 r
+  APB_INTERFACE/SPI_BR_reg[0]/Q (FD2)                     2.21       2.21 r
+  U445/Z (ND2P)                                           0.34       2.55 f
+  U446/Z (NR2P)                                           1.33       3.88 r
+  U447/Z (AO6P)                                           0.36       4.24 f
+  U466/Z (ND2)                                            0.78       5.01 r
+  U467/Y (IVDA)                                           0.38       5.39 f
+  U468/Z (AN2P)                                           0.98       6.37 f
+  U485/Z (AN2P)                                           0.87       7.24 f
+  U416/Z (OR4)                                            1.98       9.22 f
+  U427/Z (NR2)                                            1.59      10.81 r
+  U426/Z (ND2)                                            0.39      11.19 f
+  U425/Z (NR2P)                                           1.84      13.04 r
+  U860/Z (MUX21H)                                         0.98      14.02 r
+  U861/Z (EN)                                             1.13      15.15 f
+  U864/Z (NR2)                                            0.81      15.95 r
+  U865/Z (ND2)                                            0.22      16.17 f
+  U883/Z (NR2)                                            1.07      17.24 r
+  U885/Z (OR2P)                                           1.57      18.81 r
+  U937/Z (AO1P)                                           0.32      19.13 f
+  BAUD_GEN/count_reg[1]/D (FD2)                           0.00      19.13 f
+  data arrival time                                                 19.13
+
+  clock PCLK (rise edge)                                 20.00      20.00
+  clock network delay (ideal)                             0.00      20.00
+  BAUD_GEN/count_reg[1]/CP (FD2)                          0.00      20.00 r
+  library setup time                                     -0.85      19.15
+  data required time                                                19.15
+  --------------------------------------------------------------------------
+  data required time                                                19.15
+  data arrival time                                                -19.13
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.02

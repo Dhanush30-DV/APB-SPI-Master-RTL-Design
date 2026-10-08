@@ -1,0 +1,498 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid this.
+
+                           Design Compiler Graphical
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+                 Version X-2025.06 for linux64 - May 27, 2025
+
+Initializing...
+Initializing gui preferences from file  /home2/BRN69/DhaNusHraJ/.synopsys_dc_gui/preferences.tcl
+Current time:       Thu Oct  8 16:10:06 2026
+Hostname:           mavenserver-RH4
+CPU Model:          Intel(R) Xeon(R) Gold 6438Y+
+CPU Details:        Cores = 1 : Sockets = 1 : Cache Size = 61440 KB : Freq = 2.80 GHz
+OS:                 Linux 5.14.0-687.30.1.el9_8.x86_64
+RAM:                250 GB (Free   8 GB)
+Swap:                63 GB (Free  38 GB)
+Work Filesystem:    /home2 mounted to /dev/mapper/home1_VG-home2
+Tmp Filesystem:     / mounted to /dev/mapper/rhel-root
+Work Disk:          10238 GB (Free 7427 GB)
+Tmp Disk:           111 GB (Free  86 GB)
+
+CPU Load: 4103%, Ram Free: 8 GB, Swap Free: 38 GB, Work Disk Free: 7427 GB, Tmp Disk Free: 86 GB
+dc_shell> source spi_core.tcl
+Running PRESTO HDLC
+Compiling source file ../rtl/apb_spi_core_all.v
+Presto compilation completed successfully.
+Loading db file '/home/cad/eda/SYNOPSYS/Design_compiler/syn/X-2025.06/libraries/syn/lsi_10k.db'
+Loading db file '/home/cad/eda/SYNOPSYS/Design_compiler/syn/X-2025.06/libraries/syn/gtech.db'
+Loading db file '/home/cad/eda/SYNOPSYS/Design_compiler/syn/X-2025.06/libraries/syn/standard.sldb'
+  Loading link library 'lsi_10k'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+Presto compilation completed successfully. (spi_core)
+Module: spi_core, Ports: 31, Input: 17, Output: 14, Inout: 0
+Module: spi_core, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Information: Module spi_core report end. (ELAB-965)
+Elaborated 1 design.
+Current design is now 'spi_core'.
+Information: Building the design 'apb_slave'. (HDL-193)
+
+Statistics for case statements in always block in file
+        '../rtl/apb_spi_core_all.v'
+============================================================
+|    Line    |  full/ parallel  |      block location      |
+============================================================
+|    110     |    auto/auto     | always block at line 108 |
+|    159     |    auto/auto     | always block at line 146 |
+|    228     |    auto/auto     | always block at line 226 |
+============================================================
+
+Inferred memory devices in process in routine 'apb_slave' in file
+         ../rtl/apb_spi_core_all.v'.
+==================================================================================
+|    Register Name    |   Type    | Width | Bus | MB |  Set  | Reset | ST | Line |
+==================================================================================
+|      STATE_reg      | Flip-flop |   2   |  Y  | N  | None  | Async | N  | 100  |
+|    mosi_data_reg    | Flip-flop |   8   |  Y  | N  | None  | Async | N  | 146  |
+|    SPI_CR_1_reg     | Flip-flop |   6   |  Y  | N  | Async | Async | N  | 146  |
+|    send_data_reg    | Flip-flop |   1   |  N  | N  | None  | Async | N  | 146  |
+|     SPI_DR_reg      | Flip-flop |   8   |  Y  | N  | None  | Async | N  | 146  |
+|     SPI_BR_reg      | Flip-flop |   8   |  Y  | N  | None  | Async | N  | 146  |
+|    SPI_CR_2_reg     | Flip-flop |   8   |  Y  | N  | None  | Async | N  | 146  |
+|    spi_mode_reg     | Flip-flop |   2   |  Y  | N  | None  | Async | N  | 218  |
+==================================================================================
+Presto compilation completed successfully. (apb_slave)
+Module: apb_slave, Ports: 60, Input: 27, Output: 33, Inout: 0
+Module: apb_slave, Registers: 45, Async set/reset: 45, Sync set/reset: 0
+Information: Module apb_slave report end. (ELAB-965)
+Information: Building the design 'baud_generator'. (HDL-193)
+
+Inferred memory devices in process in routine 'baud_generator' in file
+         ../rtl/apb_spi_core_all.v'.
+==================================================================================
+|    Register Name    |   Type    | Width | Bus | MB |  Set  | Reset | ST | Line |
+==================================================================================
+|      sclk_reg       | Flip-flop |   1   |  N  | N  | None  | Async | N  | 307  |
+|      count_reg      | Flip-flop |  12   |  Y  | N  | None  | Async | N  | 307  |
+|    flag_low_reg     | Flip-flop |   1   |  N  | N  | None  | Async | N  | 332  |
+|    flag_high_reg    | Flip-flop |   1   |  N  | N  | None  | Async | N  | 332  |
+|    flags_low_reg    | Flip-flop |   1   |  N  | N  | None  | Async | N  | 365  |
+|   flags_high_reg    | Flip-flop |   1   |  N  | N  | None  | Async | N  | 365  |
+==================================================================================
+Presto compilation completed successfully. (baud_generator)
+Module: baud_generator, Ports: 31, Input: 14, Output: 17, Inout: 0
+Module: baud_generator, Registers: 17, Async set/reset: 17, Sync set/reset: 0
+Information: Module baud_generator report end. (ELAB-965)
+Information: Building the design 'spi_slave_select'. (HDL-193)
+
+Inferred memory devices in process in routine 'spi_slave_select' in file
+         ../rtl/apb_spi_core_all.v'.
+==================================================================================
+|    Register Name    |   Type    | Width | Bus | MB |  Set  | Reset | ST | Line |
+==================================================================================
+|      count_reg      | Flip-flop |  16   |  Y  | N  | Async | None  | N  | 431  |
+|       ss_reg        | Flip-flop |   1   |  N  | N  | Async | None  | N  | 431  |
+|       rcv_reg       | Flip-flop |   1   |  N  | N  | None  | Async | N  | 431  |
+|  receive_data_reg   | Flip-flop |   1   |  N  | N  | None  | Async | N  | 469  |
+==================================================================================
+Presto compilation completed successfully. (spi_slave_select)
+Module: spi_slave_select, Ports: 22, Input: 19, Output: 3, Inout: 0
+Module: spi_slave_select, Registers: 19, Async set/reset: 19, Sync set/reset: 0
+Information: Module spi_slave_select report end. (ELAB-965)
+Information: Building the design 'shifter'. (HDL-193)
+
+Inferred memory devices in process in routine 'shifter' in file
+         ../rtl/apb_spi_core_all.v'.
+==================================================================================
+|    Register Name    |   Type    | Width | Bus | MB |  Set  | Reset | ST | Line |
+==================================================================================
+| shift_register_reg  | Flip-flop |   8   |  Y  | N  | None  | Async | N  | 519  |
+|     count1_reg      | Flip-flop |   3   |  Y  | N  | Async | None  | N  | 542  |
+|      mosi_reg       | Flip-flop |   1   |  N  | N  | None  | Async | N  | 542  |
+|      count_reg      | Flip-flop |   3   |  Y  | N  | None  | Async | N  | 542  |
+|    temp_reg_reg     | Flip-flop |   8   |  Y  | N  | None  | Async | N  | 566  |
+|     count2_reg      | Flip-flop |   3   |  Y  | N  | None  | Async | N  | 566  |
+|     count3_reg      | Flip-flop |   3   |  Y  | N  | Async | None  | N  | 566  |
+==================================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|   shifter/554    |   8    |    1    |      3       |
+|   shifter/559    |   8    |    1    |      3       |
+======================================================
+Presto compilation completed successfully. (shifter)
+Module: shifter, Ports: 30, Input: 21, Output: 9, Inout: 0
+Module: shifter, Registers: 29, Async set/reset: 29, Sync set/reset: 0
+Information: Module shifter report end. (ELAB-965)
+Current design is 'spi_core'.
+
+  Linking design 'spi_core'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  * (5 designs)               /home2/BRN69/DhaNusHraJ/Synthesis/APB_SPI/synth/spi_core.db, etc
+  lsi_10k (library)           /home/cad/eda/SYNOPSYS/Design_compiler/syn/X-2025.06/libraries/syn/lsi_10k.db
+
+Information: Summary of messages issued during linking: (LINK-1806)
+No messages were issued during linking.
+Loading db file '/home/cad/eda/SYNOPSYS/Design_compiler/syn/X-2025.06/libraries/syn/dw_foundation.sldb'
+Warning: DesignWare synthetic library dw_foundation.sldb is added to the synthetic_library in the current command. (UISN-40)
+Information: Performing leakage power optimization. (PWR-850)
+CPU Load: 52%, Ram Free: 8 GB, Swap Free: 38 GB, Work Disk Free: 7427 GB, Tmp Disk Free: 86 GB
+Alib files are up-to-date.
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | X-2025.06-DWBB_202506.0 |     *     |
+| Licensed DW Building Blocks        | X-2025.06-DWBB_202506.0 |     *     |
+============================================================================
+
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler WLM                                                               |
+| Command Line | compile_ultra                                                                     |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 496                                    |
+| Number of User Hierarchies                              | 4                                      |
+| Sequential Cell Count                                   | 110                                    |
+| Macro Count                                             | 0                                      |
+| Pad Count                                               | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 122                                    |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with Target Library Subset (with clock_path)     | false  (false )                        |
+| Design with UPF Data                                    | false                                  |
+====================================================================================================
+Information: Sequential output inversion is enabled.  SVF file must be used for formal verification. (OPT-1208)
+
+Information: There are 11 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+  Simplifying Design 'spi_core'
+
+Loaded alib file './alib-52/lsi_10k.db.alib'
+Module: DW01_NAND2, Ports: 3, Input: 2, Output: 1, Inout: 0
+Module: DW01_NAND2, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+  Building model 'DW01_NAND2'
+Information: Ungrouping hierarchy APB_INTERFACE before Pass 1 (OPT-776)
+Information: Ungrouping hierarchy BAUD_GEN before Pass 1 (OPT-776)
+Information: Ungrouping hierarchy SLAVE_SELECT before Pass 1 (OPT-776)
+Information: Ungrouping hierarchy SHIFTER before Pass 1 (OPT-776)
+Information: Ungrouping 4 of 5 hierarchies before Pass 1 (OPT-775)
+CPU Load: 52%, Ram Free: 7 GB, Swap Free: 38 GB, Work Disk Free: 7427 GB, Tmp Disk Free: 86 GB
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'spi_core'
+Information: Added key list 'DesignWare' to design 'spi_core'. (DDB-72)
+Information: The register 'APB_INTERFACE/SPI_CR_2_reg[7]' is a constant and will be removed. (OPT-1206)
+Information: The register 'APB_INTERFACE/SPI_CR_2_reg[6]' is a constant and will be removed. (OPT-1206)
+Information: The register 'APB_INTERFACE/SPI_CR_2_reg[5]' is a constant and will be removed. (OPT-1206)
+Information: The register 'APB_INTERFACE/SPI_CR_2_reg[2]' is a constant and will be removed. (OPT-1206)
+Information: The register 'APB_INTERFACE/SPI_BR_reg[7]' is a constant and will be removed. (OPT-1206)
+Information: The register 'APB_INTERFACE/SPI_BR_reg[3]' is a constant and will be removed. (OPT-1206)
+ Implement Synthetic for 'spi_core'.
+CPU Load: 51%, Ram Free: 7 GB, Swap Free: 38 GB, Work Disk Free: 7427 GB, Tmp Disk Free: 86 GB
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Warning: Main library 'lsi_10k' does not specify the following unit required for power: 'Leakage Power'. (PWR-424)
+Warning: Target library(s) are not characterized for internal power.  Compile with power constraints is NOT recommended. (PWR-13)
+
+  Beginning Mapping Optimizations  (Ultra High effort)
+  -------------------------------
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:03    2695.0      0.37       8.6       0.0                              0.0000
+    0:00:03    2634.0      0.42      11.2       0.0                              0.0000
+
+  Beginning Constant Register Removal
+  -----------------------------------
+    0:00:03    2633.0      0.76      15.9       0.0                              0.0000
+    0:00:03    2633.0      0.76      15.9       0.0                              0.0000
+
+  Beginning Global Optimizations
+  ------------------------------
+No buffer cells compatible for Numerical Synthesis
+  Global Optimization (Phase 1)
+  Global Optimization (Phase 2)
+  Global Optimization (Phase 3)
+  Global Optimization (Phase 4)
+  Global Optimization (Phase 5)
+  Global Optimization (Phase 6)
+  Global Optimization (Phase 7)
+  Global Optimization (Phase 8)
+  Global Optimization (Phase 9)
+  Global Optimization (Phase 10)
+  Global Optimization (Phase 11)
+  Global Optimization (Phase 12)
+  Global Optimization (Phase 13)
+  Global Optimization (Phase 14)
+  Global Optimization (Phase 15)
+  Global Optimization (Phase 16)
+  Global Optimization (Phase 17)
+  Global Optimization (Phase 18)
+  Global Optimization (Phase 19)
+  Global Optimization (Phase 20)
+  Global Optimization (Phase 21)
+  Global Optimization (Phase 22)
+  Global Optimization (Phase 23)
+  Global Optimization (Phase 24)
+  Global Optimization (Phase 25)
+  Global Optimization (Phase 26)
+  Global Optimization (Phase 27)
+  Global Optimization (Phase 28)
+  Global Optimization (Phase 29)
+  Global Optimization (Phase 30)
+
+  Beginning Isolate Ports
+  -----------------------
+
+  Beginning Delay Optimization
+  ----------------------------
+    0:00:03    2213.0      0.55      11.2       0.0                              0.0000
+    0:00:03    2229.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2229.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2229.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2223.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2192.0      0.51       8.6       0.0                              0.0000
+
+  Beginning WLM Backend Optimization
+  --------------------------------------
+    0:00:03    2194.0      0.51       8.6       0.0                              0.0000
+    0:00:03    2185.0      0.18       3.3       0.0                              0.0000
+    0:00:03    2185.0      0.18       3.3       0.0                              0.0000
+    0:00:03    2185.0      0.18       3.3       0.0                              0.0000
+    0:00:03    2185.0      0.18       3.3       0.0                              0.0000
+    0:00:03    2144.0      0.13       2.2       0.0                              0.0000
+    0:00:03    2144.0      0.13       2.2       0.0                              0.0000
+    0:00:03    2178.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2178.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2178.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2178.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2178.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2139.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2139.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2139.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2139.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2139.0      0.00       0.0       0.0                              0.0000
+    0:00:03    2139.0      0.00       0.0       0.0                              0.0000
+
+                                  TOTAL
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:03    2139.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2138.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2138.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2138.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2107.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2107.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2107.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2107.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2107.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2107.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2107.0      0.00       0.0       0.0                              0.0000
+    0:00:04    2105.0      0.00       0.0       0.0                              0.0000
+CPU Load: 51%, Ram Free: 7 GB, Swap Free: 38 GB, Work Disk Free: 7427 GB, Tmp Disk Free: 86 GB
+Loading db file '/home/cad/eda/SYNOPSYS/Design_compiler/syn/X-2025.06/libraries/syn/lsi_10k.db'
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios
+
+  Optimization Complete
+  ---------------------
+Information: State dependent leakage is now switched from off to on.
+Warning: Main library 'lsi_10k' does not specify the following unit required for power: 'Leakage Power'. (PWR-424)
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+CPU Load: 51%, Ram Free: 7 GB, Swap Free: 38 GB, Work Disk Free: 7427 GB, Tmp Disk Free: 86 GB
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0
+ Enable Level Shifter:                              0
+ Isolation Cell:                                    0
+ Retention Cell:                                    0
+ Retention Clamp Cell:                              0
+ Switch Cell:                                       0
+ Always-On Cell:                                    0
+ Repeater Cell:                                     0
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped
+0 Retention Clamp Cells are unmapped
+----------------------------------------------------------------------------------------------------
+Writing verilog file '/home2/BRN69/DhaNusHraJ/Synthesis/APB_SPI/synth/spi_core_netlist.v'.
+dc_shell> report_timing
+
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : spi_core
+Version: X-2025.06
+Date   : Thu Oct  8 16:10:51 2026
+****************************************
+
+Operating Conditions: nom_pvt   Library: lsi_10k
+Wire Load Model Mode: top
+
+  Startpoint: APB_INTERFACE/SPI_BR_reg[0]
+              (rising edge-triggered flip-flop clocked by PCLK)
+  Endpoint: BAUD_GEN/count_reg[1]
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  APB_INTERFACE/SPI_BR_reg[0]/CP (FD2)                    0.00       0.00 r
+  APB_INTERFACE/SPI_BR_reg[0]/Q (FD2)                     2.21       2.21 r
+  U445/Z (ND2P)                                           0.34       2.55 f
+  U446/Z (NR2P)                                           1.33       3.88 r
+  U447/Z (AO6P)                                           0.36       4.24 f
+  U466/Z (ND2)                                            0.78       5.01 r
+  U467/Y (IVDA)                                           0.38       5.39 f
+  U468/Z (AN2P)                                           0.98       6.37 f
+  U485/Z (AN2P)                                           0.87       7.24 f
+  U416/Z (OR4)                                            1.98       9.22 f
+  U427/Z (NR2)                                            1.59      10.81 r
+  U426/Z (ND2)                                            0.39      11.19 f
+  U425/Z (NR2P)                                           1.84      13.04 r
+  U860/Z (MUX21H)                                         0.98      14.02 r
+  U861/Z (EN)                                             1.13      15.15 f
+  U864/Z (NR2)                                            0.81      15.95 r
+  U865/Z (ND2)                                            0.22      16.17 f
+  U883/Z (NR2)                                            1.07      17.24 r
+  U885/Z (OR2P)                                           1.57      18.81 r
+  U937/Z (AO1P)                                           0.32      19.13 f
+  BAUD_GEN/count_reg[1]/D (FD2)                           0.00      19.13 f
+  data arrival time                                                 19.13
+
+  clock PCLK (rise edge)                                 20.00      20.00
+  clock network delay (ideal)                             0.00      20.00
+  BAUD_GEN/count_reg[1]/CP (FD2)                          0.00      20.00 r
+  library setup time                                     -0.85      19.15
+  data required time                                                19.15
+  --------------------------------------------------------------------------
+  data required time                                                19.15
+  data arrival time                                                -19.13
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.02
+
+1
+dc_shell> report_area
+
+****************************************
+Report : area
+Design : spi_core
+Version: X-2025.06
+Date   : Thu Oct  8 16:11:08 2026
+****************************************
+
+Library(s) Used:
+
+    lsi_10k (File: /home/cad/eda/SYNOPSYS/Design_compiler/syn/X-2025.06/libraries/syn/lsi_10k.db)
+
+Number of ports:                           31
+Number of nets:                           887
+Number of cells:                          811
+Number of combinational cells:            707
+Number of sequential cells:               104
+Number of macros/black boxes:               0
+Number of buf/inv:                         90
+Number of references:                      32
+
+Combinational area:               1193.000000
+Buf/Inv area:                       90.000000
+Noncombinational area:             912.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                  2105.000000
+Total area:                 undefined
+1
+dc_shell> report_power
+
+****************************************
+Report : power
+        -analysis_effort low
+Design : spi_core
+Version: X-2025.06
+Date   : Thu Oct  8 16:11:16 2026
+****************************************
+
+Library(s) Used:
+
+    lsi_10k (File: /home/cad/eda/SYNOPSYS/Design_compiler/syn/X-2025.06/libraries/syn/lsi_10k.db)
+
+Information: The cells in your design are not characterized for internal power. (PWR-229)
+
+Operating Conditions: nom_pvt   Library: lsi_10k
+Wire Load Model Mode: top
+
+Global Operating Voltage = 5
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 0.100000ff
+    Time Units = 1ns
+    Dynamic Power Units = 100nW    (derived from V,C,T units)
+    Leakage Power Units = Unitless
+
+Attributes
+----------
+i - Including register clock pin internal power
+
+  Cell Internal Power  =   0.0000 nW    (0%)
+  Net Switching Power  = 759.1644 nW  (100%)
+                         ---------
+Total Dynamic Power    = 759.1644 nW  (100%)
+
+Cell Leakage Power     =   0.0000
+
+Error: Either dynamic power or leakage power, in the library, is unitless. Unable to display complete power group summary. (PWR-799)
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+(     N/A)
+(     N/A)
+(     N/A)
+(     N/A)  i
+(     N/A)
+(     N/A)
+(     N/A)
+--------------------------------------------------------------------------------------------------
+Total              0.0000 nW       759.1644 nW         0.0000               NA
+1
+dc_shell> gui_start

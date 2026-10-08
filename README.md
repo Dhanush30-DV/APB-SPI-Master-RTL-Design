@@ -14,7 +14,7 @@ An **AMBA APB-to-SPI master bridge** designed in **Verilog**. A processor on the
 | **Simulation** | Synopsys VCS, Xilinx ISE Simulator (ISim) |
 | **Waveform debug** | Synopsys Verdi, Xilinx ISim |
 | **Lint** | Synopsys VC SpyGlass (VC Static X-2025.06) — 0 errors, 0 latches · Verilator `-Wall` |
-| **Synthesis** | Synopsys Design Compiler, Yosys |
+| **Synthesis** | Synopsys Design Compiler X-2025.06 (`lsi_10k`) — timing met at 50 MHz, 0 latches |
 | **Protocols** | AMBA APB, SPI (Serial Peripheral Interface) |
 | **Platform** | Linux |
 
@@ -108,9 +108,15 @@ The one warning comes from the empty link-library setting, not from the RTL. The
 
 Additional open-source checks: Verilator 5 `--lint-only -Wall` gives **0 warnings**, and slang `-Weverything` gives **0 warnings**.
 
-### Synthesis
+### Synthesis — Synopsys Design Compiler (`compile_ultra`, `lsi_10k`)
 
-Synthesis script for Synopsys Design Compiler: [`syn/dc_synth.tcl`](syn/dc_synth.tcl).
+| Clock | Setup slack | Total cell area | Cells | Flip-flops | Latches |
+|---|---|---|---|---|---|
+| 20 ns (50 MHz) | **+0.02 ns (MET)** | **2105** | 811 | 104 | **0** |
+
+The critical path runs from the baud-rate register through the divisor arithmetic to the baud counter. Six register bits that the write masks hold at 0 were removed as constants. Reports, run log and schematics: [`syn/`](syn/).
+
+<p align="center"><img src="syn/images/schematic_top_level.png" alt="Synthesized spi_core" width="700"></p>
 
 ---
 
@@ -146,7 +152,10 @@ APB-SPI-Master-RTL-Design/
 │   ├── README.md             # lint results explained
 │   └── reports/              # report_lint.txt, run log
 ├── syn/
-│   └── dc_synth.tcl          # Design Compiler synthesis script
+│   ├── dc_synth.tcl          # Design Compiler synthesis script
+│   ├── README.md             # synthesis results explained
+│   ├── reports/              # timing, area, power reports + run log
+│   └── images/               # schematics (Design Vision)
 └── docs/
     ├── block_diagram.svg
     └── waveform_apb_spi_rtl.png

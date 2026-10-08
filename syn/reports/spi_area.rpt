@@ -1,0 +1,28 @@
+****************************************
+Report : area
+Design : spi_core
+Version: X-2025.06
+Date   : Thu Oct  8 16:11:08 2026
+****************************************
+
+Library(s) Used:
+
+    lsi_10k (File: /home/cad/eda/SYNOPSYS/Design_compiler/syn/X-2025.06/libraries/syn/lsi_10k.db)
+
+Number of ports:                           31
+Number of nets:                           887
+Number of cells:                          811
+Number of combinational cells:            707
+Number of sequential cells:               104
+Number of macros/black boxes:               0
+Number of buf/inv:                         90
+Number of references:                      32
+
+Combinational area:               1193.000000
+Buf/Inv area:                       90.000000
+Noncombinational area:             912.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                  2105.000000
+Total area:                 undefined
