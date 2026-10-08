@@ -116,7 +116,7 @@ Additional open-source checks: Verilator 5 `--lint-only -Wall` gives **0 warning
 
 The critical path runs from the baud-rate register through the divisor arithmetic to the baud counter. Six register bits that the write masks hold at 0 were removed as constants. Reports, run log and schematics: [`syn/`](syn/).
 
-<p align="center"><img src="syn/images/schematic_top_level.png" alt="Synthesized spi_core" width="700"></p>
+<p align="center"><img src="syn/images/schematic_block_level.png" alt="Synthesized spi_core, block level" width="100%"></p>
 
 ---
 

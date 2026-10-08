@@ -21,7 +21,7 @@
 - All four blocks were read and linked with no linking messages: `apb_slave`, `baud_generator`, `spi_slave_select` and `shifter`.
 - Every inferred storage element is an **edge-triggered flip-flop with asynchronous reset**. No latches were inferred.
 - **6 constant registers were removed**: `SPI_CR_2[7,6,5,2]` and `SPI_BR[7,3]`. The write masks (`cr2_mask = 8'h1B`, `br_mask = 8'h77`) keep these bits at 0 forever, so DC removes them. This is why there are 110 flip-flops after elaboration and 104 after compile.
-- `compile_ultra` ungrouped the four sub-blocks, so the final netlist is flat.
+- With default `compile_ultra`, the four sub-blocks were ungrouped into a flat netlist. The numbers above come from that run. A second run with `compile_ultra -no_autoungroup` keeps the hierarchy and produced the block-level schematic below.
 
 ### Critical path
 The critical path runs from `APB_INTERFACE/SPI_BR_reg[0]` to `BAUD_GEN/count_reg[1]`. A change in the baud-rate register (SPPR/SPR) goes through the divisor calculation `(SPPR+1) × 2^(SPR+1)`, then the 12-bit compare with the counter, and ends at the counter register. Data arrives at 19.13 ns against a required time of 19.15 ns.
@@ -29,6 +29,9 @@ The critical path runs from `APB_INTERFACE/SPI_BR_reg[0]` to `BAUD_GEN/count_reg
 > **Note on power:** `lsi_10k` is a teaching library without internal or leakage power characterization (DC messages `PWR-424` / `PWR-799`). Only net switching power is reported.
 
 ## Schematics
+
+**Block level** (hierarchy kept with `compile_ultra -no_autoungroup`). The four synthesized sub-blocks, APB_INTERFACE, SLAVE_SELECT, BAUD_GEN and SHIFTER, are shown with their interconnect:
+<p align="center"><img src="images/schematic_block_level.png" alt="spi_core block-level schematic" width="100%"></p>
 
 **Top level (`spi_core`):**
 <p align="center"><img src="images/schematic_top_level.png" alt="spi_core top-level symbol" width="900"></p>
